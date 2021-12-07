@@ -7,16 +7,23 @@
 #include <string.h>
 #include <time.h>
 
+
+//O(alpha(n))
 int find (int *A,  int n ){
     int tmp= n ;
     if ( A[n] < 0 ) {
         return tmp;
     }
-
+    int p =n, cur;
     while (A[tmp] >= 0 ){
         tmp = A[tmp];
     }
     if (A[n] != tmp && tmp != n){
+        while (A[p] >= 0 ){
+            cur = A[p];
+            A[p]= tmp;
+            p = cur;
+        }
         A[n]= tmp;
         A[tmp] --;
     }
@@ -26,7 +33,7 @@ int find (int *A,  int n ){
 
 
 
-
+//O(alpha(n))
 void unionSet ( int *A, int first ,int second ){
     int a = find(A,first);
     int b = find(A,second);
@@ -54,12 +61,15 @@ void unionSet ( int *A, int first ,int second ){
 
 }
 
-
+// O(n*n)*alpha(n) )
 void runAlgo (int *ptr , int *wallsArr, int n , int m ){
     int flag = 1 ,r, x,y,i  ;
     srand(time(NULL));
     int *boolArr , cnt = 0 ;
     boolArr = (int * ) calloc(n * m, sizeof (int ));
+    if (boolArr == NULL){
+        printf("error no alocated memory !!");
+    }
     int tmp;
     while (flag) {
         r = rand()%(n*m);
@@ -122,7 +132,7 @@ void runAlgo (int *ptr , int *wallsArr, int n , int m ){
 }
 
 
-
+// O(n*n)
 void makeNewWalls (int *wallsArr , int n, int m ){
     int i ;
     for (i = 0 ; i < n*(m-1) ; i++){
@@ -145,8 +155,8 @@ void makeNewWalls (int *wallsArr , int n, int m ){
 
 
 }
-
-void convertMatrixToPrintable (int *newWalls , int*wallsArr , int n , int m ){
+// O(n*n)
+void convertMatrixToPrintable (int *newWalls , int *wallsArr , int n , int m ){
     int i ,j , cnt;
     int k=0;
     for ( i = 0 ; i  < n*2+1 ; i ++){
@@ -167,7 +177,7 @@ void convertMatrixToPrintable (int *newWalls , int*wallsArr , int n , int m ){
 
 
 }
-
+// O(n*n)
 void MazePrinter (int *newWalls , int n ,int m ){
 
     printf("\n");
